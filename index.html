@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Everything is Spooky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #ff6b00;
+      --bg1: #0f0226;
+      --bg2: #310F2B;
+    }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: radial-gradient(circle at 10% 10%, rgba(255,110,50,0.05), transparent 20%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    h1 {
+      font-family: 'Creepster', cursive;
+      font-size: clamp(36px, 5vw, 64px);
+      color: #ffb86b;
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+      margin: 24px 0 12px 0;
+      z-index: 2;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: black;
+    }
+
+    video {
+      width: 100%;
+      height: auto; /* show full video with letterboxing */
+      object-fit: contain;
+      display: block;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(closest-corner, transparent 60%, rgba(0, 0, 0, 0.8)),
+                  linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0,0,0,0.6));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Center Unmute Button */
+    #unmuteBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      appearance: none;
+      background: linear-gradient(180deg, rgba(255,90,0,0.85), rgba(150,0,0,0.85));
+      border: 2px solid #ffb86b;
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Creepster', cursive;
+      font-size: clamp(20px, 3vw, 32px);
+      padding: 16px 28px;
+      cursor: pointer;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+      box-shadow: 0 0 20px rgba(255,80,0,0.6);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+    }
+
+    #unmuteBtn:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      box-shadow: 0 0 30px rgba(255,120,0,0.9);
+    }
+
+    #unmuteBtn.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Bottom-left mute button (visible after unmuting) */
+    #muteToggle {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 3;
+      appearance: none;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(255, 184, 107, 0.7);
+      border-radius: 10px;
+      color: #ffb86b;
+      font-family: 'Creepster', cursive;
+      font-size: 18px;
+      padding: 6px 14px;
+      cursor: pointer;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+      box-shadow: 0 0 10px rgba(255,80,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, background 0.3s ease;
+    }
+
+    #muteToggle.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #muteToggle:hover {
+      background: rgba(255,90,0,0.8);
+      color: #fff;
+    }
+
+    footer {
+      padding: 12px;
+      font-size: 0.9em;
+      color: rgba(255,255,255,0.6);
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Everything is Spooky...</h1>
+
+  <div class="video-container">
+    <video id="spookyVid" src="everythingisspooky.mp4"
+           autoplay loop muted playsinline preload="auto">
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+    <button id="unmuteBtn">🔊 Unmute</button>
+    <button id="muteToggle">Mute</button>
+  </div>
+
+  <footer>Happy Halloween 👻</footer>
+
+  <script>
+    const video = document.getElementById('spookyVid');
+    const unmuteBtn = document.getElementById('unmuteBtn');
+    const muteToggle = document.getElementById('muteToggle');
+
+    // Try autoplay; if blocked, just show button
+    video.play().catch(() => {});
+
+    // First unmute action
+    unmuteBtn.addEventListener('click', () => {
+      video.muted = false;
+      video.play().catch(() => {});
+      unmuteBtn.classList.add('hidden');
+      muteToggle.classList.add('visible');
+    });
+
+    // Toggle mute/unmute from bottom-left button
+    muteToggle.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteToggle.textContent = video.muted ? 'Unmute' : 'Mute';
+    });
+  </script>
+</body>
+</html>
