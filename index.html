@@ -27,6 +27,27 @@
       overflow-x: hidden;
     }
 
+    .away-message {
+      font-family: 'Creepster', cursive;
+      text-align: center;
+      color: #ffb86b;
+      background: linear-gradient(90deg, rgba(50,0,0,0.6), rgba(100,0,0,0.4), rgba(50,0,0,0.6));
+      border: 2px solid rgba(255,120,0,0.4);
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 16px auto;
+      width: fit-content;
+      max-width: 90%;
+      font-size: clamp(18px, 2vw, 28px);
+      box-shadow: 0 0 20px rgba(255,100,0,0.5);
+      animation: flicker 2.2s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0%   { opacity: 0.9; text-shadow: 0 0 8px #ff6b00, 0 0 16px #ff3c00; }
+      100% { opacity: 1; text-shadow: 0 0 12px #ff9d00, 0 0 24px #ff6b00; }
+    }
+
     h1 {
       font-family: 'Creepster', cursive;
       font-size: clamp(36px, 5vw, 64px);
@@ -136,6 +157,11 @@
 </head>
 
 <body>
+  <!-- Halloween Themed Shipping Delay Message -->
+  <div class="away-message">
+    <p>🎃 <strong>Ralph’s Bricks has vanished into the shadows until Friday, Oct 24...<br>
+🕯️ Orders will rise and ship upon my return!</strong> 👻</p>
+  </div>
   <h1>Everything is Spooky...</h1>
 
   <div class="video-container">
